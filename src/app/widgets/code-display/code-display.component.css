@@ -1,0 +1,28 @@
+.col-live{
+    width:100%;
+    color: #444;
+    font-weight: bold;
+    align-items: center;
+}
+
+.col-code{
+    width:100%;
+    border:1px solid grey;
+    border-radius: 5px;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-weight: bold;
+    color: grey;
+    height: 3em;
+    align-items: center;
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    /* background-color: red; */
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.5em;
+}

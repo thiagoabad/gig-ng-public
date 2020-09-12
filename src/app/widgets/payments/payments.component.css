@@ -1,0 +1,56 @@
+.col-live{
+    width:100%;
+    color: #444;
+    font-weight: bold;
+    align-items: center;
+}
+
+.col-code{
+    width:100%;
+    border:1px solid grey;
+    border-radius: 5px;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-weight: bold;
+    color: grey;
+    height: 3em;
+    align-items: center;
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+.input{
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.inputLabel{
+    font-weight: bold;
+    font-size: 10px;
+    color: grey;
+    margin-left: 0.5em;
+}
+
+.buttonAdd{
+    align-items: botton;
+}
+
+.grid {
+    border:1px solid grey;
+    border-radius: 5px;
+}
+
+.table-col{
+    width: 100%;
+    font-weight: bold;
+    font-size: 10px;
+    color: grey;
+    margin-left: 0.5em;
+}

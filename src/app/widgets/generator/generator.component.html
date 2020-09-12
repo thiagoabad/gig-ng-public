@@ -1,0 +1,32 @@
+
+<div class="row align-items-center">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-2">
+		<label for="inputChar" class="inputLabel">CHARACTER</label>
+		<input id="inputChar" type="text" placeholder="Character" class="form-control inputChar" maxlength="1" [readonly]="allowNewChar" #inputChar />
+	</div>
+	<div class="col-sm-5"></div>
+	<div class="col-sm-4">
+		<button type="button" class="btn btn-secondary" (click)="onClick(inputChar.value)">GENERATE 2D GRID</button>
+	</div>
+</div>
+
+<div class="row align-items-center mt-5">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-10 grid">
+		<div class="row align-items-center">
+				<div *ngFor="let char of displayGrid" class="col-grid d-flex justify-content-center">{{char}}</div>
+		</div>
+	</div>
+	<div class="col-sm-1"></div>
+</div>
+
+<code-display></code-display>
+
+<div class="row align-items-center mt-5">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-10">
+		<button type="button" class="btn btn-primary-outline pull-right" (click)="btnClick();">Payments</button> 
+	</div>
+	<div class="col-sm-1"></div>
+</div>

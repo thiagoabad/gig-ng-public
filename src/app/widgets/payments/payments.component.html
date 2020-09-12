@@ -1,0 +1,56 @@
+
+<code-display></code-display>
+
+<div class="row align-items-center mt-5">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-2">
+		<label for="inputPayment" class="inputLabel">PAYMENT</label>
+		<input id="inputPayment" type="text" placeholder="Payment" class="form-control input" maxlength="1" #inputPayment />
+	</div>
+	<div class="col-sm-2">
+		<label for="inputAmmount" class="inputLabel">AMMOUNT</label>
+		<input id="inputAmmount" type="number" placeholder="Ammount" class="form-control input" maxlength="1" #inputAmmount />
+	</div>
+	<div class="col-sm-3 align-items-botton">
+		<button type="button" class="btn btn-secondary buttonAdd" (click)="onClick(inputPayment.value, inputAmmount.value)">+ ADD</button>
+	</div>
+</div>
+
+<div class="row align-items-center mt-2">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-10">
+		<label class="inputLabel">PAYMENT LIST</label>
+  </div>
+  <div class="col-sm-1"></div>
+</div>
+
+<div class="row align-items-center mt-2">
+  <div class="col-sm-1"></div>
+  <div class="col-sm-10">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" class="table-col">NAME</th>
+          <th scope="col" class="table-col">AMMOUNT</th>
+          <th scope="col" class="table-col">CODE</th>
+          <th scope="col" class="table-col">GRID</th>
+		</tr>
+		<tr *ngFor="let payment of payments">
+			<td scope="col" class="table-col">{{payment.name}}</td>
+			<td scope="col" class="table-col">{{payment.ammount}}</td>
+			<td scope="col" class="table-col">{{payment.code}}</td>
+			<td scope="col" class="table-col">{{payment.grid}}</td>
+		</tr>
+      </thead>
+    </table>
+  </div>
+  <div class="col-sm-1"></div>
+</div>
+
+<div class="row align-items-center mt-5">
+	<div class="col-sm-1"></div>
+	<div class="col-sm-10">
+		<button type="button" class="btn btn-primary-outline pull-right" (click)="btnClick();">Generator</button> 
+	</div>
+	<div class="col-sm-1"></div>
+</div>
