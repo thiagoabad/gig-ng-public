@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { timer } from 'rxjs';
+import { Subject, timer } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 import { EventEmitterService } from 'src/app/event-emitter.service';
 
@@ -11,17 +12,22 @@ import { EventEmitterService } from 'src/app/event-emitter.service';
 })
 export class GeneratorComponent implements OnInit {
 
-  constructor(private eventEmitterService: EventEmitterService, private router: Router) { }
-
-  ngOnInit() {
-    this.eventEmitterService.sharedGrid.subscribe(grid => this.displayGrid = grid.reduce((acc, val) => acc.concat(val), []));
-  }
-
   clickMessage = '';
   allowNewChar = false;
   displayGrid: string[] = [];
   grid: string[][] = [];
   timeLeft: number = 4;
+  debounce: Subject<string> = new Subject<string>();
+  inputChar = '';
+
+  constructor(private eventEmitterService: EventEmitterService, private router: Router) { }
+
+  ngOnInit() {
+    this.eventEmitterService.sharedGrid.subscribe(grid => this.displayGrid = grid.reduce((acc, val) => acc.concat(val), []));
+    this.debounce
+    .pipe(debounceTime(300))
+    .subscribe(inputChar => this.gridGenerator(inputChar));
+  }
 
   onClick(inputChar: string) {
       this.gridGenerator(inputChar);

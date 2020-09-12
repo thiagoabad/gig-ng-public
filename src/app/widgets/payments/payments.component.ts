@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+
 import { EventEmitterService } from 'src/app/event-emitter.service';
 import { Payment } from './payment';
+import { PaymentForm } from './paymentForm';
 import { PaymentsService } from './payments.service';
 
 @Component({
@@ -16,6 +20,7 @@ export class PaymentsComponent implements OnInit {
   code1: number;
   code2: number;
   gridNeedsRefresh = true;
+  debounce: Subject<PaymentForm> = new Subject<PaymentForm>();
 
   constructor(private eventEmitterService: EventEmitterService, private paymentsService: PaymentsService, private router: Router) { }
 
@@ -25,6 +30,9 @@ export class PaymentsComponent implements OnInit {
     this.eventEmitterService.sharedGridNeedsRefresh.subscribe(gridNeedsRefresh => this.gridNeedsRefresh = gridNeedsRefresh);
     this.eventEmitterService.sharedGrid.subscribe(grid => this.grid = grid);
     this.paymentsService.sharedPayments.subscribe(payments => this.payments = payments);
+    this.debounce
+      .pipe(debounceTime(300))
+      .subscribe(filter => this.onClick(filter.name , filter.ammount));
   }
 
   onClick(inputPayment: string, inputAmmount: number) {

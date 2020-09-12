@@ -12,7 +12,7 @@
 		<input id="inputAmmount" type="number" placeholder="Ammount" class="form-control input" #inputAmmount />
 	</div>
 	<div class="col-sm-3 align-items-botton">
-		<button type="button" class="btn btn-secondary buttonAdd" (click)="onClick(inputPayment.value, inputAmmount.value)">+ ADD</button>
+		<button type="button" class="btn btn-secondary buttonAdd" (click)="debounce.next({name: inputPayment.value, ammount: inputAmmount.value})">+ ADD</button>
 	</div>
 </div>
 
@@ -50,7 +50,7 @@
 <div class="row align-items-center mt-5">
 	<div class="col-sm-1"></div>
 	<div class="col-sm-10">
-		<button type="button" class="btn btn-primary-outline pull-right" (click)="btnClick();">Generator</button> 
+		<button type="button" class="btn btn-primary-outline pull-right" (click)="btnClick()">Generator</button> 
 	</div>
 	<div class="col-sm-1"></div>
 </div>
