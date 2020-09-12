@@ -19,7 +19,7 @@ export class PaymentsComponent implements OnInit {
   payments: Payment[] = [];
   code1: number;
   code2: number;
-  gridNeedsRefresh = true;
+  live = true;
   debounce: Subject<PaymentForm> = new Subject<PaymentForm>();
 
   constructor(private eventEmitterService: EventEmitterService, private paymentsService: PaymentsService, private router: Router) { }
@@ -27,7 +27,7 @@ export class PaymentsComponent implements OnInit {
   ngOnInit() {
     this.eventEmitterService.sharedCode1.subscribe(code1 => this.code1 = code1);
     this.eventEmitterService.sharedCode2.subscribe(code2 => this.code2 = code2);
-    this.eventEmitterService.sharedGridNeedsRefresh.subscribe(gridNeedsRefresh => this.gridNeedsRefresh = gridNeedsRefresh);
+    this.eventEmitterService.sharedLive.subscribe(live => this.live = live);
     this.eventEmitterService.sharedGrid.subscribe(grid => this.grid = grid);
     this.paymentsService.sharedPayments.subscribe(payments => this.payments = payments);
     this.debounce
@@ -36,7 +36,9 @@ export class PaymentsComponent implements OnInit {
   }
 
   onClick(inputPayment: string, inputAmmount: number) {
-      
+    if (this.live){
+      return
+    }
     let payment: Payment = {
       name: inputPayment,
       ammount: inputAmmount,

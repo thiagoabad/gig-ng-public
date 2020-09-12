@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, timer } from 'rxjs';
+import { Observable, Subject, Subscription, timer } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { EventEmitterService } from 'src/app/event-emitter.service';
@@ -13,12 +13,17 @@ import { EventEmitterService } from 'src/app/event-emitter.service';
 export class GeneratorComponent implements OnInit {
 
   clickMessage = '';
-  allowNewChar = false;
+  charReadOnly = false;
   displayGrid: string[] = [];
   grid: string[][] = [];
   timeLeft: number = 4;
   debounce: Subject<string> = new Subject<string>();
   inputChar = '';
+  resizeSub: Subscription;
+  timer = timer(0, 1000);
+  tick = 0;
+  lastGen = -2;
+  lastChar = -4;
 
   constructor(private eventEmitterService: EventEmitterService, private router: Router) { }
 
@@ -27,15 +32,18 @@ export class GeneratorComponent implements OnInit {
     this.debounce
     .pipe(debounceTime(300))
     .subscribe(inputChar => this.gridGenerator(inputChar));
-  }
-
-  onClick(inputChar: string) {
-      this.gridGenerator(inputChar);
-      this.eventEmitterService.onCodeGeneratorButtonClick(this.grid);
-      this.observableTimer();
+    this.timer.subscribe(() => {
+      ++this.tick;
+      // Timer to allow new char
+      if (this.tick - this.lastChar > 4) this.charReadOnly = false
+      // Timer to kill code
+      if (this.tick - this.lastGen > 2) this.eventEmitterService.nextLive(true);
+    });
   }
 
   gridGenerator(inputChar: string): void{
+    this.lastGen = this.tick
+
     this.grid = [];
 
     //TODO add timer to input
@@ -48,6 +56,8 @@ export class GeneratorComponent implements OnInit {
         this.grid.push(array);
       }
     } else {
+      this.charReadOnly = true;
+      this.lastChar = this.tick
       let tempGrid: string[] = [];
       // fill the first 80% of the array
       for (let i = 0; i < 80; i++) {
@@ -66,7 +76,7 @@ export class GeneratorComponent implements OnInit {
       // shuffle the array
       tempGrid = this.fisherYatesShuffle(tempGrid)
 
-      // transform in a grid
+      // transform in grid
       for(let i: number = 0; i < 100; i+=10) {
         this.grid.push(tempGrid.slice(i, i+10));
       }
@@ -75,7 +85,6 @@ export class GeneratorComponent implements OnInit {
     //console.log(this.grid.reduce((acc, val) => acc.concat(val), []))
     this.displayGrid = this.grid.reduce((acc, val) => acc.concat(val), []);
     this.processGrid(this.grid);
-    
   }
 
   fisherYatesShuffle(input: string[]){
@@ -117,14 +126,6 @@ export class GeneratorComponent implements OnInit {
         return this.reduceToOneDigit(num, ++tries);
       }   
     }
-  }
-
-  observableTimer() {
-    const source = timer(1000, 4000);
-    source.subscribe(val => {
-      this.allowNewChar = true;
-      this.timeLeft = this.timeLeft - val;
-    });
   }
 
   btnClick= function () {
