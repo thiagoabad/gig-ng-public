@@ -5,11 +5,11 @@
 	<div class="col-sm-1"></div>
 	<div class="col-sm-2">
 		<label for="inputPayment" class="inputLabel">PAYMENT</label>
-		<input id="inputPayment" type="text" placeholder="Payment" class="form-control input" maxlength="1" #inputPayment />
+		<input id="inputPayment" type="text" placeholder="Payment" class="form-control input" #inputPayment />
 	</div>
 	<div class="col-sm-2">
 		<label for="inputAmmount" class="inputLabel">AMMOUNT</label>
-		<input id="inputAmmount" type="number" placeholder="Ammount" class="form-control input" maxlength="1" #inputAmmount />
+		<input id="inputAmmount" type="number" placeholder="Ammount" class="form-control input" #inputAmmount />
 	</div>
 	<div class="col-sm-3 align-items-botton">
 		<button type="button" class="btn btn-secondary buttonAdd" (click)="onClick(inputPayment.value, inputAmmount.value)">+ ADD</button>
