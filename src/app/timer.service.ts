@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, timer } from 'rxjs';
 
-@Injectable({    
-    providedIn: 'root'    
+@Injectable({
+    providedIn: 'root'
   })
 export class TimerService {
 
@@ -13,32 +13,32 @@ export class TimerService {
     private started = false;
 
     private live = new BehaviorSubject(false);
-    setLive= this.live.asObservable();
+    setLive = this.live.asObservable();
     private charReadOnly = new BehaviorSubject(false);
-    setCharReadOnly= this.charReadOnly.asObservable();
+    setCharReadOnly = this.charReadOnly.asObservable();
 
 
     constructor(){}
 
-    startClock() {
+    startClock(): void {
 
-        if (this.started) return
+        if (this.started) { return; }
         this.timer.subscribe(() => {
             ++this.tick;
             // Timer to allow new char
-            if (this.tick - this.lastChar >= 4) this.charReadOnly.next(false);
+            if (this.tick - this.lastChar >= 4) { this.charReadOnly.next(false); }
             // Timer to kill code
-            if (this.tick - this.codeTTL >= 10) this.live.next(false);
+            if (this.tick - this.codeTTL >= 2) { this.live.next(false); }
         });
         this.started = true;
     }
 
-    nextLive(live: boolean) {
+    nextLive(live: boolean): void {
         this.live.next(live);
         this.codeTTL = this.tick;
     }
 
-    nextCharReadOnly(charReadOnly: boolean) {
+    nextCharReadOnly(charReadOnly: boolean): void {
         this.charReadOnly.next(charReadOnly);
         this.lastChar = this.tick;
     }

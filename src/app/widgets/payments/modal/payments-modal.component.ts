@@ -2,9 +2,9 @@ import { Component, ViewEncapsulation, ElementRef, Input, OnInit, OnDestroy } fr
 
 import { ModalService } from './payments-modal.service';
 
-@Component({ 
-    selector: 'payments-modal', 
-    templateUrl: 'payments-modal.component.html', 
+@Component({
+    selector: 'app-payments-modal',
+    templateUrl: 'payments-modal.component.html',
     styleUrls: ['payments-modal.component.css'],
     encapsulation: ViewEncapsulation.None
 })

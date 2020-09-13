@@ -6,7 +6,7 @@ import { StorageService } from 'src/app/storage.service';
 import { TimerService } from 'src/app/timer.service';
 
 @Component({
-  selector: 'widget-generator',
+  selector: 'app-generator',
   templateUrl: './generator.component.html',
   styleUrls: ['./generator.component.css']
 })
@@ -16,19 +16,19 @@ export class GeneratorComponent implements OnInit {
   charReadOnly = false;
   displayGrid: string[] = [];
   grid: string[][] = [];
-  timeLeft: number = 4;
+  timeLeft = 4;
   debounce: Subject<string> = new Subject<string>();
   inputChar = '';
 
   constructor(private storageService: StorageService, private timer: TimerService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.storageService.sharedGrid.subscribe(grid => this.displayGrid = grid.reduce((acc, val) => acc.concat(val), []));
     this.timer.setCharReadOnly.subscribe(charReadOnly => this.charReadOnly = charReadOnly);
     this.debounce
     .pipe(debounceTime(300))
     .subscribe(inputChar => this.gridGenerator(inputChar));
-    this.timer.startClock()
+    this.timer.startClock();
     if (!this.displayGrid.length) {
       for (let i = 0; i < 100; i++) {
         this.displayGrid.push('a');
@@ -41,10 +41,10 @@ export class GeneratorComponent implements OnInit {
 
     this.grid = [];
 
-    if (inputChar === ""){
-      for(let i: number = 0; i < 10; i++) {
-        let array: string[] = [];
-        for(let j: number = 0; j< 10; j++) {
+    if (inputChar === ''){
+      for (let i = 0; i < 10; i++) {
+        const array: string[] = [];
+        for (let j = 0; j < 10; j++) {
           array.push(String.fromCharCode(97 + Math.floor(Math.random() * 26)));
         }
         this.grid.push(array);
@@ -57,7 +57,7 @@ export class GeneratorComponent implements OnInit {
       for (let i = 0; i < 80; i++) {
         let tempChar = String.fromCharCode(97 + Math.floor(Math.random() * 26));
 
-        //While to exclude the input char
+        // while to exclude the input char
         while (tempChar === inputChar) {
           tempChar = String.fromCharCode(97 + Math.floor(Math.random() * 26));
         }
@@ -68,11 +68,11 @@ export class GeneratorComponent implements OnInit {
         tempGrid.push(inputChar);
       }
       // shuffle the array
-      tempGrid = this.fisherYatesShuffle(tempGrid)
+      tempGrid = this.fisherYatesShuffle(tempGrid);
 
       // transform in grid
-      for(let i: number = 0; i < 100; i+=10) {
-        this.grid.push(tempGrid.slice(i, i+10));
+      for (let i = 0; i < 100; i += 10) {
+        this.grid.push(tempGrid.slice(i, i + 10));
       }
     }
 
@@ -80,36 +80,38 @@ export class GeneratorComponent implements OnInit {
     this.processGrid(this.grid);
   }
 
-  fisherYatesShuffle(input: string[]){
-    for(let i = input.length - 1; i > 0; i--){
-      const j = Math.floor(Math.random() * i)
-      const temp = input[i]
-      input[i] = input[j]
-      input[j] = temp
+  fisherYatesShuffle(input: string[]): string[] {
+    for (let i = input.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * i);
+      const temp = input[i];
+      input[i] = input[j];
+      input[j] = temp;
     }
     return input;
   }
 
   processGrid(grid: string[][]): void {
 
-    let d = new Date();
-    let seconds = d.getSeconds();
-    let quotient = Math.floor(seconds/10);
-    let remainder = seconds % 10;
+    const d = new Date();
+    const seconds = d.getSeconds();
+    const quotient = Math.floor(seconds / 10);
+    const remainder = seconds % 10;
 
-    let cellValue1 = grid[quotient][remainder];
-    let cellValue2 = grid[remainder][quotient];
+    const cellValue1 = grid[quotient][remainder];
+    const cellValue2 = grid[remainder][quotient];
 
-    let code1stDigit = grid.map(x => x.filter(y => y === cellValue1).length).reduce((accumulator, currentValue) => accumulator + currentValue);
-    let code2ndDigit = grid.map(x => x.filter(y => y === cellValue2).length).reduce((accumulator, currentValue) => accumulator + currentValue);
+    const code1stDigit = grid.map(x => x.filter(y => y === cellValue1).length)
+                              .reduce((accumulator, currentValue) => accumulator + currentValue);
+    const code2ndDigit = grid.map(x => x.filter(y => y === cellValue2).length)
+                              .reduce((accumulator, currentValue) => accumulator + currentValue);
 
     this.storageService.nextCodes(this.reduceToOneDigit(code1stDigit), this.reduceToOneDigit(code2ndDigit), grid);
 
   }
 
-  reduceToOneDigit(num: number, tries = 2){
+  reduceToOneDigit(num: number, tries = 2): number{
     if (num < 10){
-      return num
+      return num;
     } else{
       let res = num / tries;
       res = Math.ceil(res);
@@ -117,7 +119,7 @@ export class GeneratorComponent implements OnInit {
         return res;
       } else {
         return this.reduceToOneDigit(num, ++tries);
-      }   
+      }
     }
   }
 

@@ -1,7 +1,7 @@
 <div class="container">
 	<app-navbar></app-navbar>
 
-	<widget-code-display></widget-code-display>
+	<app-code-display></app-code-display>
 	<div class="row align-items-center mt-5">
 		<div class="col-sm-1"></div>
 		<div class="col-sm-2">
@@ -50,11 +50,11 @@
 		<div class="col-lg-1"></div>
 	</div>
 
-	<payments-modal id="payments-modal" [style.display]="'none'">
+	<app-payments-modal id="payments-modal" [style.display]="'none'">
 		<h2 class="modalH2">Errors</h2>
 		<ul class="list-group modalList">
 			<li class="list-group-item list-group-item-danger" *ngFor="let error of errors">{{error}}</li>
 		</ul>
 		<button class="btn btn-secondary" (click)="closeModal('payments-modal');">Close</button>
-	</payments-modal>
+	</app-payments-modal>
 </div>

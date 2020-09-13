@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 import { Payment } from './payment';
 import { BehaviorSubject } from 'rxjs';
 
-const API = 'https://thiagoa.free.beeceptor.com';
+const API = 'https://localhost:3000';
 
 @Injectable({ providedIn: 'root' })
 export class PaymentsService {
@@ -14,12 +14,12 @@ export class PaymentsService {
     private paymentsBS = new BehaviorSubject(this.payments);
     sharedPayments = this.paymentsBS.asObservable();
 
-    apiPut() {
-         return this.http
+    apiPut(): void {
+         this.http
              .put<Payment[]>(API + '/payments', this.payments).subscribe();
     }
 
-    nextPayments(payments: Payment[]){
+    nextPayments(payments: Payment[]): void{
         this.paymentsBS.next(payments);
     }
 

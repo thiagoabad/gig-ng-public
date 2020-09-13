@@ -1,4 +1,4 @@
 export interface PaymentForm {
-    name:string;
-    ammount:number;
+    name: string;
+    ammount: number;
 }

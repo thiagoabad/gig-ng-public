@@ -6,17 +6,17 @@ import { Router } from '@angular/router';
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.css']
   })
-  export class NavbarComponent implements OnInit {
-    constructor(private router: Router){}
+export class NavbarComponent implements OnInit {
+  constructor(private router: Router){}
 
-    ngOnInit(): void {
-    }
-
-    payments= function () {
-        this.router.navigateByUrl('/payments');
-    };
-
-    generator= function () {
-        this.router.navigateByUrl('/generator');
-    };
+  ngOnInit(): void {
   }
+
+  payments = function(): void {
+      this.router.navigateByUrl('/payments');
+  };
+
+  generator = function(): void {
+      this.router.navigateByUrl('/generator');
+  };
+}
