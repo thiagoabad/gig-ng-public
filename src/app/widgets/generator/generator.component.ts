@@ -7,7 +7,7 @@ import { EventEmitterService } from 'src/app/event-emitter.service';
 import { TimerService } from 'src/app/timer.service';
 
 @Component({
-  selector: 'app-generator',
+  selector: 'widget-generator',
   templateUrl: './generator.component.html',
   styleUrls: ['./generator.component.css']
 })
@@ -72,7 +72,6 @@ export class GeneratorComponent implements OnInit {
       }
     }
 
-    //console.log(this.grid.reduce((acc, val) => acc.concat(val), []))
     this.displayGrid = this.grid.reduce((acc, val) => acc.concat(val), []);
     this.processGrid(this.grid);
   }
@@ -117,5 +116,5 @@ export class GeneratorComponent implements OnInit {
       }   
     }
   }
-  
+
 }

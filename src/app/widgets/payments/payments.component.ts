@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -10,7 +9,7 @@ import { PaymentForm } from './paymentForm';
 import { PaymentsService } from './payments.service';
 
 @Component({
-  selector: 'app-payments',
+  selector: 'widget-payments',
   templateUrl: './payments.component.html',
   styleUrls: ['./payments.component.css']
 })

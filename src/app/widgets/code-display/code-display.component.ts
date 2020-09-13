@@ -4,7 +4,7 @@ import { EventEmitterService } from 'src/app/event-emitter.service';
 import { TimerService } from 'src/app/timer.service';
 
 @Component({
-  selector: 'code-display',
+  selector: 'widget-code-display',
   templateUrl: './code-display.component.html',
   styleUrls: ['./code-display.component.css']
 })
