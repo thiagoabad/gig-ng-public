@@ -1,10 +1,10 @@
-import { Injectable, EventEmitter } from '@angular/core';    
+import { Injectable } from '@angular/core';    
 import { BehaviorSubject } from 'rxjs'; 
     
 @Injectable({    
   providedIn: 'root'    
 })    
-export class EventEmitterService {    
+export class StorageService {    
       
   private code1 = new BehaviorSubject(0);
   private code2 = new BehaviorSubject(0);

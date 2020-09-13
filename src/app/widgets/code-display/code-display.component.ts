@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { EventEmitterService } from 'src/app/event-emitter.service';
+import { StorageService } from 'src/app/storage.service';
 import { TimerService } from 'src/app/timer.service';
 
 @Component({
@@ -14,11 +14,11 @@ export class CodeDisplayComponent implements OnInit {
   code2: number;
   live: boolean;
 
-  constructor(private eventEmitterService: EventEmitterService, private timer: TimerService  ) {}
+  constructor(private storageService: StorageService, private timer: TimerService  ) {}
 
   ngOnInit() {   
-    this.eventEmitterService.sharedCode1.subscribe(code1 => this.code1 = code1)
-    this.eventEmitterService.sharedCode2.subscribe(code2 => this.code2 = code2)
+    this.storageService.sharedCode1.subscribe(code1 => this.code1 = code1)
+    this.storageService.sharedCode2.subscribe(code2 => this.code2 = code2)
     this.timer.setLive.subscribe(live => this.live = live)
   }
 

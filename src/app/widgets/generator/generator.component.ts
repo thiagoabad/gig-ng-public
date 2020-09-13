@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Subject, timer } from 'rxjs';
+import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { EventEmitterService } from 'src/app/event-emitter.service';
+import { StorageService } from 'src/app/storage.service';
 import { TimerService } from 'src/app/timer.service';
 
 @Component({
@@ -21,10 +20,10 @@ export class GeneratorComponent implements OnInit {
   debounce: Subject<string> = new Subject<string>();
   inputChar = '';
 
-  constructor(private eventEmitterService: EventEmitterService, private timer: TimerService) { }
+  constructor(private storageService: StorageService, private timer: TimerService) { }
 
   ngOnInit() {
-    this.eventEmitterService.sharedGrid.subscribe(grid => this.displayGrid = grid.reduce((acc, val) => acc.concat(val), []));
+    this.storageService.sharedGrid.subscribe(grid => this.displayGrid = grid.reduce((acc, val) => acc.concat(val), []));
     this.timer.setCharReadOnly.subscribe(charReadOnly => this.charReadOnly = charReadOnly);
     this.debounce
     .pipe(debounceTime(300))
@@ -99,7 +98,7 @@ export class GeneratorComponent implements OnInit {
     let code1stDigit = grid.map(x => x.filter(y => y === cellValue1).length).reduce((accumulator, currentValue) => accumulator + currentValue);
     let code2ndDigit = grid.map(x => x.filter(y => y === cellValue2).length).reduce((accumulator, currentValue) => accumulator + currentValue);
 
-    this.eventEmitterService.nextCodes(this.reduceToOneDigit(code1stDigit), this.reduceToOneDigit(code2ndDigit), grid);
+    this.storageService.nextCodes(this.reduceToOneDigit(code1stDigit), this.reduceToOneDigit(code2ndDigit), grid);
 
   }
 

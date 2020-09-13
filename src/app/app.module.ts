@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { ErrorsModule } from './errors/errors.module';
 import { WidgetsModule } from './widgets/widgets.module';
-import { EventEmitterService } from './event-emitter.service';
+import { StorageService } from './storage.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { EventEmitterService } from './event-emitter.service';
     AppRoutingModule,
     ErrorsModule
   ],
-  providers: [EventEmitterService],
+  providers: [StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
