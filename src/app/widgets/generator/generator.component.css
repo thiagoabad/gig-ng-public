@@ -1,52 +1,22 @@
-.txt-desc {
-    font-size: 10px;
-    font-weight: bold;
-    color: #555;
-}
-
 .col-grid{
     width:10%;
-    border:1px solid grey;
+    border:0.5px solid #bbb;
     min-height: 1px;
     padding-right: 15px;
     padding-left: 15px;
-}
-
-.col-live{
-    width:100%;
-    color: #444;
-    font-weight: bold;
-    align-items: center;
-}
-
-.col-code{
-    width:100%;
-    border:1px solid grey;
-    border-radius: 5px;
-    min-height: 1px;
-    padding-right: 15px;
-    padding-left: 15px;
-    font-weight: bold;
+    font-size: 18px;
     color: grey;
-    height: 3em;
-    align-items: center;
 }
 
-.dot {
-    height: 8px;
-    width: 8px;
-    /* background-color: red; */
-    border-radius: 50%;
-    display: inline-block;
-    margin-right: 0.5em;
+.grid {
+    border:0.5px solid #bbb;
+    border-radius: 5px;
 }
 
 .inputChar{
     font-weight: bold;
     font-size: 10px;
-    
 }
-
 
 .inputLabel{
     font-weight: bold;
@@ -55,7 +25,3 @@
     margin-left: 0.5em;
 }
 
-.grid {
-    border:1px solid grey;
-    border-radius: 5px;
-}

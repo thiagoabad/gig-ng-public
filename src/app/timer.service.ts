@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { timer } from 'rxjs/internal/observable/timer';
+import { BehaviorSubject, timer } from 'rxjs';
 
 @Injectable({    
     providedIn: 'root'    
@@ -9,7 +8,7 @@ export class TimerService {
 
     private timer = timer(0, 1000);
     private tick = 0;
-    private lastGen = -10;
+    private codeTTL = -2;
     private lastChar = -4;
     private started = false;
 
@@ -29,14 +28,14 @@ export class TimerService {
             // Timer to allow new char
             if (this.tick - this.lastChar >= 4) this.charReadOnly.next(false);
             // Timer to kill code
-            if (this.tick - this.lastGen >= 10) this.live.next(false);
+            if (this.tick - this.codeTTL >= 10) this.live.next(false);
         });
         this.started = true;
     }
 
     nextLive(live: boolean) {
         this.live.next(live);
-        this.lastGen = this.tick;
+        this.codeTTL = this.tick;
     }
 
     nextCharReadOnly(charReadOnly: boolean) {

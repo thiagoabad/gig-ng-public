@@ -29,6 +29,11 @@ export class GeneratorComponent implements OnInit {
     .pipe(debounceTime(300))
     .subscribe(inputChar => this.gridGenerator(inputChar));
     this.timer.startClock()
+    if (!this.displayGrid.length) {
+      for (let i = 0; i < 100; i++) {
+        this.displayGrid.push('a');
+      }
+    }
   }
 
   gridGenerator(inputChar: string): void{
