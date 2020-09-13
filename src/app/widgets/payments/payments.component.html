@@ -47,3 +47,11 @@
   </div>
   <div class="col-sm-1"></div>
 </div>
+
+<payments-modal id="payments-modal" [style.display]="'none'">
+    <h2 class="modalH2">Errors</h2>
+    <ul class="list-group modalList">
+		<li class="list-group-item list-group-item-danger" *ngFor="let error of errors">{{error}}</li>
+	</ul>
+    <button class="btn btn-secondary" (click)="closeModal('payments-modal');">Close</button>
+</payments-modal>

@@ -7,6 +7,7 @@ import { TimerService } from 'src/app/timer.service';
 import { Payment } from './payment';
 import { PaymentForm } from './paymentForm';
 import { PaymentsService } from './payments.service';
+import { ModalService } from './modal/payments-modal.service';
 
 @Component({
   selector: 'widget-payments',
@@ -21,8 +22,9 @@ export class PaymentsComponent implements OnInit {
   code2: number;
   live: boolean;
   debounce: Subject<PaymentForm> = new Subject<PaymentForm>();
+  errors: string[] = [];
 
-  constructor(private eventEmitterService: EventEmitterService, private paymentsService: PaymentsService, private timer: TimerService) { }
+  constructor(private eventEmitterService: EventEmitterService, private paymentsService: PaymentsService, private timer: TimerService, private modalService: ModalService) { }
 
   ngOnInit() {
     this.eventEmitterService.sharedCode1.subscribe(code1 => this.code1 = code1);
@@ -36,9 +38,16 @@ export class PaymentsComponent implements OnInit {
   }
 
   onClick(inputPayment: string, inputAmmount: number) {
-    if (!this.live){
+    this.errors = [];
+    if (!this.live) this.errors.push("Code has expired");
+    if (inputPayment.trim() === '') this.errors.push("Payment cannot be empty");
+    if (!inputAmmount) this.errors.push("Ammount cannot be empty");
+
+    if (this.errors.length > 0){
+      this.openModal('payments-modal');
       return
     }
+
     let payment: Payment = {
       name: inputPayment,
       ammount: inputAmmount,
@@ -47,6 +56,14 @@ export class PaymentsComponent implements OnInit {
     }
     this.payments.push(payment);
 
+  }
+
+  openModal(id: string) {
+    this.modalService.open(id);
+  }
+
+  closeModal(id: string) {
+    this.modalService.close(id);
   }
 
 }

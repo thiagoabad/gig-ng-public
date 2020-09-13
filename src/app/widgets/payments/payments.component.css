@@ -54,3 +54,13 @@
     color: grey;
     margin-left: 0.5em;
 }
+
+.modalH2{
+    font-weight: bold;
+    font-size: 20px;
+    color: grey;
+}
+.modalList{
+    margin-top: 1em;
+    margin-bottom: 1em;
+}

@@ -1,0 +1,33 @@
+.payments-modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    overflow: auto;
+}
+
+.payments-modal-body {
+    padding: 2rem;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    /* margin exposes part of the modal background */
+    margin: 0rem;
+}
+
+.payments-modal-background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    opacity: 0.75;
+    z-index: 900;
+}
+
+body.payments-modal-open {
+    overflow: hidden;
+}
