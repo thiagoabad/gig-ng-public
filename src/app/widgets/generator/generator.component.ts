@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, Subject, Subscription, timer } from 'rxjs';
+import { Subject, timer } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { EventEmitterService } from 'src/app/event-emitter.service';
+import { TimerService } from 'src/app/timer.service';
 
 @Component({
   selector: 'app-generator',
@@ -19,34 +20,23 @@ export class GeneratorComponent implements OnInit {
   timeLeft: number = 4;
   debounce: Subject<string> = new Subject<string>();
   inputChar = '';
-  resizeSub: Subscription;
-  timer = timer(0, 1000);
-  tick = 0;
-  lastGen = -2;
-  lastChar = -4;
 
-  constructor(private eventEmitterService: EventEmitterService, private router: Router) { }
+  constructor(private eventEmitterService: EventEmitterService, private router: Router, private timer: TimerService) { }
 
   ngOnInit() {
     this.eventEmitterService.sharedGrid.subscribe(grid => this.displayGrid = grid.reduce((acc, val) => acc.concat(val), []));
+    this.timer.setCharReadOnly.subscribe(charReadOnly => this.charReadOnly = charReadOnly);
     this.debounce
     .pipe(debounceTime(300))
     .subscribe(inputChar => this.gridGenerator(inputChar));
-    this.timer.subscribe(() => {
-      ++this.tick;
-      // Timer to allow new char
-      if (this.tick - this.lastChar > 4) this.charReadOnly = false
-      // Timer to kill code
-      if (this.tick - this.lastGen > 2) this.eventEmitterService.nextLive(true);
-    });
+    this.timer.startClock()
   }
 
   gridGenerator(inputChar: string): void{
-    this.lastGen = this.tick
+    this.timer.nextLive(true);
 
     this.grid = [];
 
-    //TODO add timer to input
     if (inputChar === ""){
       for(let i: number = 0; i < 10; i++) {
         let array: string[] = [];
@@ -56,8 +46,8 @@ export class GeneratorComponent implements OnInit {
         this.grid.push(array);
       }
     } else {
-      this.charReadOnly = true;
-      this.lastChar = this.tick
+      this.timer.nextCharReadOnly(true);
+
       let tempGrid: string[] = [];
       // fill the first 80% of the array
       for (let i = 0; i < 80; i++) {
