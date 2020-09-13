@@ -22,7 +22,7 @@ export class PaymentsComponent implements OnInit {
   live = true;
   debounce: Subject<PaymentForm> = new Subject<PaymentForm>();
 
-  constructor(private eventEmitterService: EventEmitterService, private paymentsService: PaymentsService, private router: Router) { }
+  constructor(private eventEmitterService: EventEmitterService, private paymentsService: PaymentsService) { }
 
   ngOnInit() {
     this.eventEmitterService.sharedCode1.subscribe(code1 => this.code1 = code1);
@@ -49,7 +49,4 @@ export class PaymentsComponent implements OnInit {
 
   }
 
-  btnClick= function () {
-    this.router.navigateByUrl('/generator');
-  };
 }

@@ -21,7 +21,7 @@ export class GeneratorComponent implements OnInit {
   debounce: Subject<string> = new Subject<string>();
   inputChar = '';
 
-  constructor(private eventEmitterService: EventEmitterService, private router: Router, private timer: TimerService) { }
+  constructor(private eventEmitterService: EventEmitterService, private timer: TimerService) { }
 
   ngOnInit() {
     this.eventEmitterService.sharedGrid.subscribe(grid => this.displayGrid = grid.reduce((acc, val) => acc.concat(val), []));
@@ -117,8 +117,5 @@ export class GeneratorComponent implements OnInit {
       }   
     }
   }
-
-  btnClick= function () {
-    this.router.navigateByUrl('/payments');
-  };
+  
 }
