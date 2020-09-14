@@ -16,7 +16,6 @@ export class GeneratorComponent implements OnInit {
   charReadOnly = false;
   displayGrid: string[] = [];
   grid: string[][] = [];
-  timeLeft = 4;
   debounce: Subject<string> = new Subject<string>();
   inputChar = '';
 
@@ -25,6 +24,10 @@ export class GeneratorComponent implements OnInit {
   ngOnInit(): void {
     this.storageService.sharedGrid.subscribe(grid => this.displayGrid = grid.reduce((acc, val) => acc.concat(val), []));
     this.timer.setCharReadOnly.subscribe(charReadOnly => this.charReadOnly = charReadOnly);
+    this.timer.invokeRefreshGrid.subscribe(() => {
+        this.gridGenerator(this.inputChar);
+    });
+    this.timer.nextLive(false);
     this.debounce
     .pipe(debounceTime(300))
     .subscribe(inputChar => this.gridGenerator(inputChar));

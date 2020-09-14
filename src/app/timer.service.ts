@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { BehaviorSubject, timer } from 'rxjs';
 
 @Injectable({
@@ -16,7 +16,7 @@ export class TimerService {
     setLive = this.live.asObservable();
     private charReadOnly = new BehaviorSubject(false);
     setCharReadOnly = this.charReadOnly.asObservable();
-
+    invokeRefreshGrid = new EventEmitter();
 
     constructor(){}
 
@@ -28,7 +28,7 @@ export class TimerService {
             // Timer to allow new char
             if (this.tick - this.lastChar >= 4) { this.charReadOnly.next(false); }
             // Timer to kill code
-            if (this.tick - this.codeTTL >= 2) { this.live.next(false); }
+            if (this.tick - this.codeTTL >= 2) { this.invokeRefreshGrid.emit(); }
         });
         this.started = true;
     }
